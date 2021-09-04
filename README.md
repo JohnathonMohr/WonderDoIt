@@ -44,7 +44,9 @@ Authentication guide for Microsoft Graph: https://docs.microsoft.com/en-us/graph
 6. Client Id: Application (Client) Id in App registration overview
 7. Client secret: Create a secret in App registration "Certificates & secrets" section.
 8. Authentication type: In Request Body
-9. Scopes: Add scope of `https://graph.microsoft.com/.default`
+9. Scopes: Add scopes of:
+    - `https://graph.microsoft.com/Tasks.ReadWrite` (to read/write tasks through Graph)
+    - `offline_access` (so the */token* url endpoint also returns a refresh token)
 10. Copy Amazon-provided redirect URLs into Redirect URIs of registered App (step 2 in [App authentication settings](#app-authentication-settings))
 
 # Other Information
