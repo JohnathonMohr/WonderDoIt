@@ -88,20 +88,20 @@ async function addTodoList(graphClient, todoList){
 
 //Skill logic
 function buildShoppingListFilter(){
-    return `contains(name,'einkauf')
-            or contains(name,'shop')
-            or contains(name,'grocery')
-            or contains(name,'groceri')
-            or contains(name,'achat')
-            or contains(name,'magasin')
-            or contains(name,'courses')
-            or contains(name,'compra')
-            or contains(name,'compra')
-            or contains(name,'spesa')`;
+    return `contains(displayName,'einkauf')
+            or contains(displayName,'shop')
+            or contains(displayName,'grocery')
+            or contains(displayName,'groceri')
+            or contains(displayName,'achat')
+            or contains(displayName,'magasin')
+            or contains(displayName,'courses')
+            or contains(displayName,'compra')
+            or contains(displayName,'compra')
+            or contains(displayName,'spesa')`;
 }
 
 function buildGivenListFilter(listName){
-    return `contains(name,'${listName}')`;
+    return `contains(displayName,'${listName}')`;
 }
 
 function createTodoList(name){
@@ -113,16 +113,16 @@ async function getShoppingList(graphClient, listName){
     var givenListFilter = buildGivenListFilter(listName);
 
     //Filter withouth given listName first! Prefer predefined lists instead of the given name!
-    var lists = await getTaskLists(graphClient, shoppingListFilter); 
+    var lists = await getTaskLists(graphClient, shoppingListFilter);
     
-    if (lists["@odata.count"] > 0){
+    if (lists.value.length > 0){
         return lists.value[0];
-    } else {    
+    } else {
         //Do a second run with the given name here, if no predefined list found, then look for the given one.
         lists = await getTaskLists(graphClient, givenListFilter); 
-        if (lists["@odata.count"] > 0){
+        if (lists.value.length > 0){
             return lists.value[0];
-        } else {        
+        } else {
             //Only if this one also is not found then create a new one!
             return createList(graphClient, listName);
         }
@@ -134,7 +134,7 @@ async function getCustomList(graphClient, listName){
     var customListFilter = buildGivenListFilter(listName);
     var lists = await getTaskLists(graphClient, customListFilter);
     
-    if (lists["@odata.count"] > 0){
+    if (lists.value.length > 0){
         return lists.value[0];
     } else {
         return createList(graphClient, listName);
@@ -157,7 +157,7 @@ async function createList(graphClient, listName){
 
 async function handleDuplicates(graphClient, todoTask, todoTaskList){
     var duplicates = await getDuplicates(graphClient, todoTask, todoTaskList);
-    if (duplicates["@odata.count"] > 0){
+    if (duplicates.value.length > 0){
         //Set completed duplicate task back to notStarted
         var duplicate = duplicates.value.find(x => x.status === "completed");
         if (undefined === duplicate){

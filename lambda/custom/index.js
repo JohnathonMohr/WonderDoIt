@@ -13,6 +13,10 @@ const DEFAULT_ALEXA_LISTS = {
     TODO: 'Alexa to-do list'
 }
 
+// Required for Graph API.
+// See install instructions: https://www.npmjs.com/package/@microsoft/microsoft-graph-client#installation
+require('isomorphic-fetch');
+
 //External modules
 const Alexa = require('ask-sdk-core');
 const i18n = require('i18next');
@@ -342,7 +346,6 @@ const MicrosoftGraphValidationInterceptor = {
 
                 // Initialize the Microsoft Graph client
                 var graphClient = MicrosoftGraph.Client.init({
-                    defaultVersion: 'beta',
                     authProvider: (done) => {
                         done(null, graphToken);
                     }
