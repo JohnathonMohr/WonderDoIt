@@ -342,8 +342,6 @@ const MicrosoftGraphValidationInterceptor = {
         try {
             var graphToken =handlerInput.requestEnvelope.context.System.user.accessToken;
             if (graphToken) {
-                console.log("Microsoft Graph API Auth Token: " + graphToken);
-
                 // Initialize the Microsoft Graph client
                 var graphClient = MicrosoftGraph.Client.init({
                     authProvider: (done) => {
