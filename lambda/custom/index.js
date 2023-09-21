@@ -367,7 +367,7 @@ const AlexaListApiValidationInterceptor = {
         try {
             var alexaToken = handlerInput.requestEnvelope.context.System.apiAccessToken;
             if (alexaToken) {
-                console.log("Alexa API Auth Token: " + alexaToken);
+                console.log("Alexa API Auth Token is not null.");
             } else {
                 console.log("Alexa list permissions are not defined!");
             }   
@@ -380,7 +380,7 @@ const AlexaListApiValidationInterceptor = {
 
 const GlobalEventLoggingInterceptor = {
     process(handlerInput) {
-        console.log("handlerInput.RequestEnvelope = " + JSON.stringify(handlerInput.requestEnvelope));
+        console.log("Got handlerInput."));
     },
 };
 
